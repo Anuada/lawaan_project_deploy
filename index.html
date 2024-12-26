@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lawaan Food Menu</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printTable, #printTable * {
+        visibility: visible;
+      }
+      #printTable {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+      }
+      .actions-column {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Lawaan Menu 1 Week</h1>
+    <form id="crudForm" class="mb-4">
+      <div class="row g-3">
+        <!-- Monday to Sunday fields -->
+        <div class="col-md-4">
+          <label for="mondayBreakfast" class="form-label">Monday Breakfast</label>
+          <input type="text" id="mondayBreakfast" class="form-control" placeholder="Enter Monday's breakfast" required>
+        </div>
+        <div class="col-md-4">
+          <label for="mondayLunch" class="form-label">Monday Lunch</label>
+          <input type="text" id="mondayLunch" class="form-control" placeholder="Enter Monday's lunch" required>
+        </div>
+        <div class="col-md-4">
+          <label for="mondayDinner" class="form-label">Monday Dinner</label>
+          <input type="text" id="mondayDinner" class="form-control" placeholder="Enter Monday's dinner" required>
+        </div>
+
+        <!-- Tuesday -->
+        <div class="col-md-4">
+          <label for="tuesdayBreakfast" class="form-label">Tuesday Breakfast</label>
+          <input type="text" id="tuesdayBreakfast" class="form-control" placeholder="Enter Tuesday's breakfast" required>
+        </div>
+        <div class="col-md-4">
+          <label for="tuesdayLunch" class="form-label">Tuesday Lunch</label>
+          <input type="text" id="tuesdayLunch" class="form-control" placeholder="Enter Tuesday's lunch" required>
+        </div>
+        <div class="col-md-4">
+          <label for="tuesdayDinner" class="form-label">Tuesday Dinner</label>
+          <input type="text" id="tuesdayDinner" class="form-control" placeholder="Enter Tuesday's dinner" required>
+        </div>
+
+        <!-- Wednesday -->
+        <div class="col-md-4">
+          <label for="wednesdayBreakfast" class="form-label">Wednesday Breakfast</label>
+          <input type="text" id="wednesdayBreakfast" class="form-control" placeholder="Enter Wednesday's breakfast" required>
+        </div>
+        <div class="col-md-4">
+          <label for="wednesdayLunch" class="form-label">Wednesday Lunch</label>
+          <input type="text" id="wednesdayLunch" class="form-control" placeholder="Enter Wednesday's lunch" required>
+        </div>
+        <div class="col-md-4">
+          <label for="wednesdayDinner" class="form-label">Wednesday Dinner</label>
+          <input type="text" id="wednesdayDinner" class="form-control" placeholder="Enter Wednesday's dinner" required>
+        </div>
+
+        <!-- Thursday -->
+        <div class="col-md-4">
+          <label for="thursdayBreakfast" class="form-label">Thursday Breakfast</label>
+          <input type="text" id="thursdayBreakfast" class="form-control" placeholder="Enter Thursday's breakfast" required>
+        </div>
+        <div class="col-md-4">
+          <label for="thursdayLunch" class="form-label">Thursday Lunch</label>
+          <input type="text" id="thursdayLunch" class="form-control" placeholder="Enter Thursday's lunch" required>
+        </div>
+        <div class="col-md-4">
+          <label for="thursdayDinner" class="form-label">Thursday Dinner</label>
+          <input type="text" id="thursdayDinner" class="form-control" placeholder="Enter Thursday's dinner" required>
+        </div>
+
+        <!-- Friday -->
+        <div class="col-md-4">
+          <label for="fridayBreakfast" class="form-label">Friday Breakfast</label>
+          <input type="text" id="fridayBreakfast" class="form-control" placeholder="Enter Friday's breakfast" required>
+        </div>
+        <div class="col-md-4">
+          <label for="fridayLunch" class="form-label">Friday Lunch</label>
+          <input type="text" id="fridayLunch" class="form-control" placeholder="Enter Friday's lunch" required>
+        </div>
+        <div class="col-md-4">
+          <label for="fridayDinner" class="form-label">Friday Dinner</label>
+          <input type="text" id="fridayDinner" class="form-control" placeholder="Enter Friday's dinner" required>
+        </div>
+
+        <!-- Saturday -->
+        <div class="col-md-4">
+          <label for="saturdayBreakfast" class="form-label">Saturday Breakfast</label>
+          <input type="text" id="saturdayBreakfast" class="form-control" placeholder="Enter Saturday's breakfast" required>
+        </div>
+        <div class="col-md-4">
+          <label for="saturdayLunch" class="form-label">Saturday Lunch</label>
+          <input type="text" id="saturdayLunch" class="form-control" placeholder="Enter Saturday's lunch" required>
+        </div>
+        <div class="col-md-4">
+          <label for="saturdayDinner" class="form-label">Saturday Dinner</label>
+          <input type="text" id="saturdayDinner" class="form-control" placeholder="Enter Saturday's dinner" required>
+        </div>
+
+        <!-- Sunday -->
+        <div class="col-md-4">
+          <label for="sundayBreakfast" class="form-label">Sunday Breakfast</label>
+          <input type="text" id="sundayBreakfast" class="form-control" placeholder="Enter Sunday's breakfast" required>
+        </div>
+        <div class="col-md-4">
+          <label for="sundayLunch" class="form-label">Sunday Lunch</label>
+          <input type="text" id="sundayLunch" class="form-control" placeholder="Enter Sunday's lunch" required>
+        </div>
+        <div class="col-md-4">
+          <label for="sundayDinner" class="form-label">Sunday Dinner</label>
+          <input type="text" id="sundayDinner" class="form-control" placeholder="Enter Sunday's dinner" required>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary w-100">Save Menu</button>
+      </div>
+    </form>
+    
+    <!-- Print Button -->
+    <div class="text-center mb-3">
+      <button class="btn btn-success" onclick="printTable()">Print Menu</button>
+    </div>
+    
+    <!-- Table to display the menu -->
+    <div id="printTable">
+      <h2 class="text-center">Menu List</h2>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Breakfast</th>
+            <th>Lunch</th>
+            <th>Dinner</th>
+            <th class="actions-column">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="menuTable">
+          <!-- Menu items will be appended here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let currentRowIndex = -1; // To track the row being edited
+
+    // Function to reset the form
+    function resetForm() {
+      document.getElementById('crudForm').reset();
+      currentRowIndex = -1;
+    }
+
+    // Function to load form values dynamically
+    function loadFormValues(menu) {
+      // Load all days' data into the form
+      Object.keys(menu).forEach(day => {
+        const { breakfast, lunch, dinner } = menu[day];
+        document.getElementById(`${day}Breakfast`).value = breakfast || '';
+        document.getElementById(`${day}Lunch`).value = lunch || '';
+        document.getElementById(`${day}Dinner`).value = dinner || '';
+      });
+    }
+
+    // Function to load menu from local storage
+    function loadMenu() {
+      const menuTable = document.getElementById('menuTable');
+      menuTable.innerHTML = ''; // Clear existing table rows
+      const storedMenu = JSON.parse(localStorage.getItem('menuData')) || {};
+
+      Object.keys(storedMenu).forEach((day) => {
+        const menuRow = document.createElement('tr');
+        menuRow.innerHTML = `
+          <td>${day.charAt(0).toUpperCase() + day.slice(1)}</td>
+          <td>${storedMenu[day].breakfast}</td>
+          <td>${storedMenu[day].lunch}</td>
+          <td>${storedMenu[day].dinner}</td>
+          <td class="actions-column">
+            <button class="btn btn-warning btn-sm" onclick="editMenu(this)">Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteMenu(this)">Delete</button>
+          </td>
+        `;
+        menuTable.appendChild(menuRow);
+      });
+    }
+
+    // Function to save menu to local storage
+    function saveMenuToLocalStorage(menuData) {
+      localStorage.setItem('menuData', JSON.stringify(menuData));
+    }
+
+    // Function to handle form submission (save and update)
+    document.getElementById('crudForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const inputs = {
+        monday: {
+          breakfast: document.getElementById('mondayBreakfast').value,
+          lunch: document.getElementById('mondayLunch').value,
+          dinner: document.getElementById('mondayDinner').value,
+        },
+        tuesday: {
+          breakfast: document.getElementById('tuesdayBreakfast').value,
+          lunch: document.getElementById('tuesdayLunch').value,
+          dinner: document.getElementById('tuesdayDinner').value,
+        },
+        wednesday: {
+          breakfast: document.getElementById('wednesdayBreakfast').value,
+          lunch: document.getElementById('wednesdayLunch').value,
+          dinner: document.getElementById('wednesdayDinner').value,
+        },
+        thursday: {
+          breakfast: document.getElementById('thursdayBreakfast').value,
+          lunch: document.getElementById('thursdayLunch').value,
+          dinner: document.getElementById('thursdayDinner').value,
+        },
+        friday: {
+          breakfast: document.getElementById('fridayBreakfast').value,
+          lunch: document.getElementById('fridayLunch').value,
+          dinner: document.getElementById('fridayDinner').value,
+        },
+        saturday: {
+          breakfast: document.getElementById('saturdayBreakfast').value,
+          lunch: document.getElementById('saturdayLunch').value,
+          dinner: document.getElementById('saturdayDinner').value,
+        },
+        sunday: {
+          breakfast: document.getElementById('sundayBreakfast').value,
+          lunch: document.getElementById('sundayLunch').value,
+          dinner: document.getElementById('sundayDinner').value,
+        },
+      };
+
+      const storedMenu = JSON.parse(localStorage.getItem('menuData')) || {};
+      
+      if (currentRowIndex === -1) {
+        // Add new data to the menu
+        Object.assign(storedMenu, inputs);
+      } else {
+        // Update specific row data
+        const rows = document.querySelectorAll('#menuTable tr');
+        const row = rows[currentRowIndex];
+        const day = row.cells[0].textContent.toLowerCase();
+        storedMenu[day] = {
+          breakfast: inputs[day].breakfast,
+          lunch: inputs[day].lunch,
+          dinner: inputs[day].dinner,
+        };
+      }
+
+      saveMenuToLocalStorage(storedMenu);
+      loadMenu(); // Reload the table with updated data
+      resetForm();
+    });
+
+    // Function to handle editing a menu item
+    function editMenu(button) {
+      const row = button.closest('tr');
+      const cells = row.querySelectorAll('td');
+      const day = cells[0].textContent.toLowerCase();
+      const storedMenu = JSON.parse(localStorage.getItem('menuData')) || {};
+      
+      loadFormValues(storedMenu);
+      currentRowIndex = Array.from(row.parentNode.children).indexOf(row); // Set the current row index
+    }
+
+    // Function to handle deleting a menu item
+    function deleteMenu(button) {
+      const row = button.closest('tr');
+      const cells = row.querySelectorAll('td');
+      const day = cells[0].textContent.toLowerCase();
+
+      const storedMenu = JSON.parse(localStorage.getItem('menuData')) || {};
+      delete storedMenu[day];
+
+      saveMenuToLocalStorage(storedMenu);
+      loadMenu(); // Reload the table with updated data
+    }
+
+    // Function to print the table
+    function printTable() {
+      window.print();
+    }
+
+    // Load menu from local storage on page load
+    window.onload = loadMenu;
+  </script>
+</body>
+</html>
