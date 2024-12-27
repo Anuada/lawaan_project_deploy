@@ -24,6 +24,10 @@
         display: none;
       }
     }
+
+    .highlight {
+      background-color: #f8d7da; /* Light red background for highlighting */
+    }
   </style>
 </head>
 <body class="bg-light">
@@ -162,145 +166,150 @@
   <script>
     let currentRowIndex = -1; // To track the row being edited
 
-    // Function to reset the form
-    function resetForm() {
-      document.getElementById('crudForm').reset();
-      currentRowIndex = -1;
-    }
+// Function to reset the form
+function resetForm() {
+  document.getElementById('crudForm').reset();
+  currentRowIndex = -1;
+}
 
-    // Function to load form values dynamically
-    function loadFormValues(menu) {
-      // Load all days' data into the form
-      Object.keys(menu).forEach(day => {
-        const { breakfast, lunch, dinner } = menu[day];
-        document.getElementById(`sche_${day}Breakfast`).value = breakfast || '';
-        document.getElementById(`sche_${day}Lunch`).value = lunch || '';
-        document.getElementById(`sche_${day}Dinner`).value = dinner || '';
-      });
-    }
+// Function to load form values dynamically
+function loadFormValues(menu) {
+  // Load all days' data into the form
+  Object.keys(menu).forEach(day => {
+    const { breakfast, lunch, dinner } = menu[day];
+    document.getElementById(`sche_${day}Breakfast`).value = breakfast || '';
+    document.getElementById(`sche_${day}Lunch`).value = lunch || '';
+    document.getElementById(`sche_${day}Dinner`).value = dinner || '';
+  });
+}
 
-    // Function to load menu from local storage
-    function loadMenu() {
-      const menuTable = document.getElementById('menuTable');
-      menuTable.innerHTML = ''; // Clear existing table rows
-      const storedMenu = JSON.parse(localStorage.getItem('menuData')) || {};
+// Function to load menu from local storage
+function loadMenu() {
+  const menuTable = document.getElementById('menuTable');
+  menuTable.innerHTML = ''; // Clear existing table rows
+  const storedMenu = JSON.parse(localStorage.getItem('menuData')) || {};
 
-      Object.keys(storedMenu).forEach((day) => {
-        const menuRow = document.createElement('tr');
-        menuRow.innerHTML = `
-          <td>${day.charAt(0).toUpperCase() + day.slice(1)}</td>
-          <td>${storedMenu[day].breakfast}</td>
-          <td>${storedMenu[day].lunch}</td>
-          <td>${storedMenu[day].dinner}</td>
-          <td class="actions-column">
-            <button class="btn btn-warning btn-sm" onclick="editMenu(this)">Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="deleteMenu(this)">Delete</button>
-          </td>
-        `;
-        menuTable.appendChild(menuRow);
-      });
-    }
+  Object.keys(storedMenu).forEach((day) => {
+    const menuRow = document.createElement('tr');
+    menuRow.innerHTML = `
+      <td>${day.charAt(0).toUpperCase() + day.slice(1)}</td>
+      <td>${storedMenu[day].breakfast}</td>
+      <td>${storedMenu[day].lunch}</td>
+      <td>${storedMenu[day].dinner}</td>
+      <td class="actions-column">
+        <button class="btn btn-warning btn-sm" onclick="editMenu(this)">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteMenu(this)">Delete</button>
+      </td>
+    `;
+    menuTable.appendChild(menuRow);
+  });
+}
 
-    // Function to save menu to local storage
-    function saveMenuToLocalStorage(menuData) {
-      localStorage.setItem('menuData', JSON.stringify(menuData));
-    }
+// Function to save menu to local storage
+function saveMenuToLocalStorage(menuData) {
+  localStorage.setItem('menuData', JSON.stringify(menuData));
+}
 
-    // Function to handle form submission (save and update)
-    document.getElementById('crudForm').addEventListener('submit', function (e) {
-      e.preventDefault();
+// Function to handle form submission (save and update)
+document.getElementById('crudForm').addEventListener('submit', function (e) {
+  e.preventDefault();
 
-      const inputs = {
-        monday: {
-          breakfast: document.getElementById('sche_mondayBreakfast').value,
-          lunch: document.getElementById('sche_mondayLunch').value,
-          dinner: document.getElementById('sche_mondayDinner').value,
-        },
-        tuesday: {
-          breakfast: document.getElementById('sche_tuesdayBreakfast').value,
-          lunch: document.getElementById('sche_tuesdayLunch').value,
-          dinner: document.getElementById('sche_tuesdayDinner').value,
-        },
-        wednesday: {
-          breakfast: document.getElementById('sche_wednesdayBreakfast').value,
-          lunch: document.getElementById('sche_wednesdayLunch').value,
-          dinner: document.getElementById('sche_wednesdayDinner').value,
-        },
-        thursday: {
-          breakfast: document.getElementById('sche_thursdayBreakfast').value,
-          lunch: document.getElementById('sche_thursdayLunch').value,
-          dinner: document.getElementById('sche_thursdayDinner').value,
-        },
-        friday: {
-          breakfast: document.getElementById('sche_fridayBreakfast').value,
-          lunch: document.getElementById('sche_fridayLunch').value,
-          dinner: document.getElementById('sche_fridayDinner').value,
-        },
-        saturday: {
-          breakfast: document.getElementById('sche_saturdayBreakfast').value,
-          lunch: document.getElementById('sche_saturdayLunch').value,
-          dinner: document.getElementById('sche_saturdayDinner').value,
-        },
-        sunday: {
-          breakfast: document.getElementById('sche_sundayBreakfast').value,
-          lunch: document.getElementById('sche_sundayLunch').value,
-          dinner: document.getElementById('sche_sundayDinner').value,
-        },
-      };
+  const inputs = {
+    monday: {
+      breakfast: document.getElementById('sche_mondayBreakfast').value,
+      lunch: document.getElementById('sche_mondayLunch').value,
+      dinner: document.getElementById('sche_mondayDinner').value,
+    },
+    tuesday: {
+      breakfast: document.getElementById('sche_tuesdayBreakfast').value,
+      lunch: document.getElementById('sche_tuesdayLunch').value,
+      dinner: document.getElementById('sche_tuesdayDinner').value,
+    },
+    wednesday: {
+      breakfast: document.getElementById('sche_wednesdayBreakfast').value,
+      lunch: document.getElementById('sche_wednesdayLunch').value,
+      dinner: document.getElementById('sche_wednesdayDinner').value,
+    },
+    thursday: {
+      breakfast: document.getElementById('sche_thursdayBreakfast').value,
+      lunch: document.getElementById('sche_thursdayLunch').value,
+      dinner: document.getElementById('sche_thursdayDinner').value,
+    },
+    friday: {
+      breakfast: document.getElementById('sche_fridayBreakfast').value,
+      lunch: document.getElementById('sche_fridayLunch').value,
+      dinner: document.getElementById('sche_fridayDinner').value,
+    },
+    saturday: {
+      breakfast: document.getElementById('sche_saturdayBreakfast').value,
+      lunch: document.getElementById('sche_saturdayLunch').value,
+      dinner: document.getElementById('sche_saturdayDinner').value,
+    },
+    sunday: {
+      breakfast: document.getElementById('sche_sundayBreakfast').value,
+      lunch: document.getElementById('sche_sundayLunch').value,
+      dinner: document.getElementById('sche_sundayDinner').value,
+    },
+  };
 
-      const storedMenu = JSON.parse(localStorage.getItem('menuData')) || {};
-      
-      if (currentRowIndex === -1) {
-        // Add new data to the menu
-        Object.assign(storedMenu, inputs);
-      } else {
-        // Update specific row data
-        const rows = document.querySelectorAll('#menuTable tr');
-        const row = rows[currentRowIndex];
-        const day = row.cells[0].textContent.toLowerCase();
-        storedMenu[day] = {
-          breakfast: inputs[day].breakfast,
-          lunch: inputs[day].lunch,
-          dinner: inputs[day].dinner,
-        };
-      }
+  const storedMenu = JSON.parse(localStorage.getItem('menuData')) || {};
+  
+  if (currentRowIndex === -1) {
+    // Add new data to the menu
+    Object.assign(storedMenu, inputs);
+  } else {
+    // Update specific row data
+    const rows = document.querySelectorAll('#menuTable tr');
+    const row = rows[currentRowIndex];
+    const day = row.cells[0].textContent.toLowerCase();
+    storedMenu[day] = {
+      breakfast: inputs[day].breakfast,
+      lunch: inputs[day].lunch,
+      dinner: inputs[day].dinner,
+    };
+  }
 
-      saveMenuToLocalStorage(storedMenu);
-      loadMenu(); // Reload the table with updated data
-      resetForm();
-    });
+  saveMenuToLocalStorage(storedMenu);
+  loadMenu(); // Reload the table with updated data
+  resetForm();
+});
 
-    // Function to handle editing a menu item
-    function editMenu(button) {
-      const row = button.closest('tr');
-      const cells = row.querySelectorAll('td');
-      const day = cells[0].textContent.toLowerCase();
-      const storedMenu = JSON.parse(localStorage.getItem('menuData')) || {};
-      
-      loadFormValues(storedMenu);
-      currentRowIndex = Array.from(row.parentNode.children).indexOf(row); // Set the current row index
-    }
+// Function to handle editing a menu item
+function editMenu(button) {
+  const row = button.closest('tr');
+  const cells = row.querySelectorAll('td');
+  const day = cells[0].textContent.toLowerCase();
+  const storedMenu = JSON.parse(localStorage.getItem('menuData')) || {};
+  
+  loadFormValues(storedMenu);
+  currentRowIndex = Array.from(row.parentNode.children).indexOf(row); // Set the current row index
 
-    // Function to handle deleting a menu item
-    function deleteMenu(button) {
-      const row = button.closest('tr');
-      const cells = row.querySelectorAll('td');
-      const day = cells[0].textContent.toLowerCase();
+  // Highlight the row being edited
+  document.querySelectorAll('#menuTable tr').forEach((row) => row.classList.remove('table-primary'));
+  row.classList.add('table-primary');
+}
 
-      const storedMenu = JSON.parse(localStorage.getItem('menuData')) || {};
-      delete storedMenu[day];
+// Function to handle deleting a menu item
+function deleteMenu(button) {
+  const row = button.closest('tr');
+  const cells = row.querySelectorAll('td');
+  const day = cells[0].textContent.toLowerCase();
 
-      saveMenuToLocalStorage(storedMenu);
-      loadMenu(); // Reload the table with updated data
-    }
+  const storedMenu = JSON.parse(localStorage.getItem('menuData')) || {};
+  delete storedMenu[day];
 
-    // Function to print the table
-    function printTable() {
-      window.print();
-    }
+  saveMenuToLocalStorage(storedMenu);
+  loadMenu(); // Reload the table with updated data
+}
 
-    // Load menu from local storage on page load
-    window.onload = loadMenu;
+// Function to print the table
+function printTable() {
+  window.print();
+}
+
+// Load menu from local storage on page load
+window.onload = loadMenu;
+
   </script>
 </body>
 </html>

@@ -24,6 +24,11 @@
         display: none;
       }
     }
+
+    .highlight {
+      background-color: #f8d7da; /* Light red background for highlighting */
+    }
+
   </style>
 </head>
 <body class="bg-light">
@@ -286,6 +291,9 @@
       
       loadFormValues(storedMenu);
       currentRowIndex = Array.from(row.parentNode.children).indexOf(row); // Set the current row index
+      // Highlight the row being edited
+  document.querySelectorAll('#menuTable tr').forEach((row) => row.classList.remove('table-primary'));
+  row.classList.add('table-primary');
     }
 
     // Function to handle deleting a menu item
