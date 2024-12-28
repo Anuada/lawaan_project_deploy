@@ -3,6 +3,7 @@ const container = document.getElementById('receipt-container');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
 const searchInput = document.getElementById('search-input');
+const downloadPdfBtn = document.getElementById('download-pdf-btn');
 const receiptsPerPage = 10;
 let currentPage = 1;
 let filteredReceipts = [];
@@ -185,7 +186,6 @@ window.printAllReceipts = () => {
                 }
             }
         </style>
-        
         </head>
         <body>
             ${printHTML}
@@ -198,5 +198,65 @@ window.printAllReceipts = () => {
     `);
 };
 
-// Initial render
+// Download all receipts as PDF
+downloadPdfBtn.addEventListener('click', () => {
+    const { jsPDF } = window.jspdf;
+    const receipts = getReceipts();
+
+    if (receipts.length === 0) {
+        alert('No receipts to download.');
+        return;
+    }
+
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text('Receipts', 105, 10, { align: 'center' });
+
+    const pageWidth = doc.internal.pageSize.width;
+    const pageHeight = doc.internal.pageSize.height;
+
+    const margin = 10; // Margin around the page
+    const cellWidth = (pageWidth - 3 * margin) / 2; // Two columns
+    const cellHeight = 40; // Height of each receipt
+    const startX = margin;
+    const startY = 20; // Starting Y-coordinate for the first row
+    let currentX = startX;
+    let currentY = startY;
+
+    receipts.forEach((receipt, index) => {
+        // Add a new page if the content exceeds the page height
+        if (currentY + cellHeight > pageHeight - margin) {
+            doc.addPage();
+            currentX = startX;
+            currentY = startY;
+        }
+
+        // Draw a border for the receipt cell
+        doc.setDrawColor(0);
+        doc.rect(currentX, currentY, cellWidth, cellHeight);
+
+        // Add receipt details inside the cell
+        const padding = 5; // Padding inside the cell
+        let textY = currentY + padding + 4; // Starting text Y-coordinate
+        doc.setFontSize(12);
+        doc.text(`Name: ${receipt.name}`, currentX + padding, textY);
+        textY += 8;
+        doc.text(`Description: ${receipt.description}`, currentX + padding, textY);
+        textY += 8;
+        doc.text(`Amount: P${receipt.amount.toFixed(2)}`, currentX + padding, textY); // Changed symbol to "P"
+        textY += 8;
+        doc.text(`Date: ${receipt.date}`, currentX + padding, textY);
+
+        // Move to the next column or row
+        if (currentX + cellWidth + margin > pageWidth - margin) {
+            currentX = startX; // Reset to the first column
+            currentY += cellHeight + margin; // Move to the next row
+        } else {
+            currentX += cellWidth + margin; // Move to the next column
+        }
+    });
+
+    doc.save('receipts.pdf');
+});
+
 renderReceipts();
