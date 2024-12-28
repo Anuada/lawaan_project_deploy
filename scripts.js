@@ -115,83 +115,77 @@ window.printAllReceipts = () => {
         return;
     }
 
-    const totalPages = Math.ceil(receipts.length / receiptsPerPage);
-    let printHTML = '';
-
-    for (let page = 1; page <= totalPages; page++) {
-        const start = (page - 1) * receiptsPerPage;
-        const end = start + receiptsPerPage;
-        const receiptsToPrint = receipts.slice(start, end);
-
-        printHTML += `
-            <div class="page">
-                <h1>Receipts - Page ${page}</h1>
-                <div class="receipt-container">
-                    ${receiptsToPrint.map(receipt => `
-                        <div class="receipt">
-                            <h3>${receipt.name}</h3>
-                            <p><strong>Description:</strong> ${receipt.description}</p>
-                            <p><strong>Amount:</strong> ₱${receipt.amount.toFixed(2)}</p>
-                            <p><strong>Date:</strong> ${receipt.date}</p>
-                        </div>
-                    `).join('')}
-                </div>
+    let printHTML = `
+        <div>
+            <h1 style="text-align: center;">Receipts</h1>
+            <div class="receipt-container">
+                ${receipts.map(receipt => `
+                    <div class="receipt">
+                        <h3>${receipt.name}</h3>
+                        <p><strong>Description:</strong> ${receipt.description}</p>
+                        <p><strong>Amount:</strong> ₱${receipt.amount.toFixed(2)}</p>
+                        <p><strong>Date:</strong> ${receipt.date}</p>
+                    </div>
+                `).join('')}
             </div>
-            <div style="page-break-before: always;"></div>
-        `;
-    }
+        </div>
+    `;
 
     const printWindow = window.open('', '_blank');
     printWindow.document.write(`
         <html>
         <head>
-            <title>Print All Receipts</title>
+            <title>Print Receipts</title>
             <style>
+            body {
+                font-family: Arial, sans-serif;
+                padding: 10px;
+                margin: 0;
+            }
+            .receipt-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+                margin-top: 10px;
+                background-color: #f9f9f9; /* Light gray background for better readability */
+                padding: 10px;
+                border-radius: 10px; /* Slight rounding for aesthetics */
+            }
+            .receipt {
+                width: 100%;
+                max-width: 350px;
+                border: 1px solid #000; /* Ensure borders are visible in print */
+                border-radius: 5px;
+                padding: 10px;
+                margin-bottom: 10px;
+                background-color: #fff; /* White background for individual receipts */
+            }
+            h3, p {
+                margin: 5px 0;
+            }
+            @media print {
                 body {
-                    font-family: Arial, sans-serif;
-                    padding: 20px;
+                    margin: 0;
+                    font-size: 14px;
                 }
                 .receipt-container {
-                    display: grid;
-                    grid-template-columns: repeat(2, 1fr);
-                    gap: 20px;
-                    margin-top: 20px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    justify-content: center;
+                    margin: 0;
+                    background-color: #fff; /* Ensure consistent white background during print */
                 }
                 .receipt {
-                    padding: 10px;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
-                    margin-bottom: 20px;
+                    page-break-inside: avoid;
+                    border: 1px solid #000; /* Black border for clear visibility */
+                    border-radius: 5px; /* Keep consistent rounded borders */
+                    margin: 0;
                 }
-                h3, p {
-                    margin: 5px 0;
-                }
-                .page {
-                    margin-bottom: 40px;
-                }
-                @media print {
-                    body {
-                        margin: 0;
-                    }
-                    .receipt-container {
-                        display: grid;
-                        grid-template-columns: repeat(2, 1fr);
-                        gap: 20px;
-                        margin: 0;
-                    }
-                    .receipt {
-                        padding: 10px;
-                        border: 1px solid #ddd;
-                        border-radius: 5px;
-                        margin-bottom: 20px;
-                        page-break-inside: avoid;
-                    }
-                    @page {
-                        size: A4;
-                        margin: 0;
-                    }
-                }
-            </style>
+            }
+        </style>
+        
         </head>
         <body>
             ${printHTML}
