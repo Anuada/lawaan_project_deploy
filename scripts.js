@@ -217,13 +217,22 @@ downloadPdfBtn.addEventListener('click', () => {
 
     const margin = 10; // Margin around the page
     const cellWidth = (pageWidth - 3 * margin) / 2; // Two columns
-    const cellHeight = 40; // Height of each receipt
     const startX = margin;
     const startY = 20; // Starting Y-coordinate for the first row
     let currentX = startX;
     let currentY = startY;
 
     receipts.forEach((receipt, index) => {
+        const padding = 5; // Padding inside the cell
+
+        // Wrap description text to fit within the cell width
+        const wrappedDescription = doc.splitTextToSize(receipt.description, cellWidth - 2 * padding);
+
+        // Calculate the required cell height based on the content
+        const lineHeight = 8;
+        const contentHeight = 4 * lineHeight + wrappedDescription.length * lineHeight; // 4 lines for Name, Amount, Date, and a blank line
+        const cellHeight = contentHeight + 2 * padding;
+
         // Add a new page if the content exceeds the page height
         if (currentY + cellHeight > pageHeight - margin) {
             doc.addPage();
@@ -236,15 +245,18 @@ downloadPdfBtn.addEventListener('click', () => {
         doc.rect(currentX, currentY, cellWidth, cellHeight);
 
         // Add receipt details inside the cell
-        const padding = 5; // Padding inside the cell
         let textY = currentY + padding + 4; // Starting text Y-coordinate
         doc.setFontSize(12);
         doc.text(`Name: ${receipt.name}`, currentX + padding, textY);
-        textY += 8;
-        doc.text(`Description: ${receipt.description}`, currentX + padding, textY);
-        textY += 8;
-        doc.text(`Amount: P${receipt.amount.toFixed(2)}`, currentX + padding, textY); // Changed symbol to "P"
-        textY += 8;
+        textY += lineHeight;
+
+        wrappedDescription.forEach(line => {
+            doc.text(line, currentX + padding, textY);
+            textY += lineHeight;
+        });
+
+        doc.text(`Amount: P${receipt.amount.toFixed(2)}`, currentX + padding, textY);
+        textY += lineHeight;
         doc.text(`Date: ${receipt.date}`, currentX + padding, textY);
 
         // Move to the next column or row
@@ -258,5 +270,7 @@ downloadPdfBtn.addEventListener('click', () => {
 
     doc.save('receipts.pdf');
 });
+
+
 
 renderReceipts();
