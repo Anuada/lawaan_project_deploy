@@ -104,7 +104,7 @@
    
     <form id="receipt-form">
         <input type="text" id="name" placeholder="Name" required>
-        <input type="text" id="description" placeholder="Description" required>
+        <textarea id="description" placeholder="Description" required style="resize: none; height: 100px; width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem;"></textarea>
         <input type="number" id="amount" placeholder="Amount" required>
         <input type="date" id="date" placeholder="Date (optional)">
         <button type="submit">Add Receipt</button>
@@ -122,8 +122,10 @@
     
     <br>
     <br>
-    <center><button onclick="printAllReceipts()">Print All Receipts</button></center>
-<center><button id="download-pdf-btn">Download as PDF</button></center>
+    <div id="pagination-controls" style="text-align: center; margin-top: 20px;">
+    <button onclick="printAllReceipts()">Print All Receipts</button>
+    <button id="download-pdf-btn">Download as PDF</button>
+    </div>
 </body>
 <script src="scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
