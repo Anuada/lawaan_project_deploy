@@ -13,17 +13,25 @@
             background-position: center;
             background-repeat: no-repeat;
         }
+
         h1, p {
             color: #f0f0f0; /* Light gray color for readability */
             text-align: center;
             font-family: Arial, sans-serif;
             text-shadow: 1px 1px 2px #000; /* Add subtle shadow for better contrast */
         }
+
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(2, 300px); /* Create two columns */
+            gap: 20px; /* Spacing between buttons */
+            justify-content: center;
+            margin-top: 20px;
+        }
+
         .button {
             display: block;
-            width: 300px;
             height: 50px;
-            margin: 10px 0;
             background: linear-gradient(to bottom, #a000a0, #ff00ff);
             border-radius: 25px;
             text-align: center;
@@ -37,16 +45,19 @@
         }
     </style>
 </head>
-<h1>John 14:2-5<br>
-    <p>In this passage, Jesus says, "In my Father's house are many rooms; if that were not so, would I have told you that I am going there to prepare a place for you?". 
-    He also says, "And if I go and prepare a place for you, I will come back and take you to be with me that you also may be where I am."</p>
-</h1>
 <body>
-    <a href="index.html" class="button">Food Menu</a>
-    <a href="schedule.html" class="button">Schedule Cooking</a>
-    <a href="receipt.html" class="button">Receipt Generator</a>
-    <a href="cashbook.html" class="button">Cash Book</a>
+    <h1>John 14:2-5<br>
+        <p>In this passage, Jesus says, "In my Father's house are many rooms; if that were not so, would I have told you that I am going there to prepare a place for you?". 
+        He also says, "And if I go and prepare a place for you, I will come back and take you to be with me that you also may be where I am."</p>
+    </h1>
 
-    
+    <div class="button-container">
+        <a href="index.html" class="button">Food Menu</a>
+        <a href="schedule.html" class="button">Schedule Cooking</a>
+        <a href="receipt.html" class="button">Receipt Generator</a>
+        <a href="cashbook.html" class="button">Cash Book</a>
+        <a href="chordbook.html" class="button">Chord Book</a>
+
+    </div>
 </body>
 </html>

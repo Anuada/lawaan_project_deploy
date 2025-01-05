@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChordBook System</title>
+    <link rel="stylesheet" href="./css/css_for_Chord_book.css">
+
+</head>
+<body>
+    <div class="container">
+        <h1>ChordBook System</h1>
+        <input type="text" id="title" placeholder="Enter song title">
+        <textarea id="lyrics" placeholder="Enter song lyrics"></textarea>
+        <button onclick="saveChord()">Save Chord</button>
+
+        <input type="text" id="searchBar" placeholder="Search by title" oninput="filterChords()">
+        <div class="chord-list" id="chordList"></div>
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="lyricsModal">
+        <div class="modal-content">
+            <h2 id="modalTitle"></h2>
+            <div id="modalLyrics" class="lyrics-container"></div>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script src="./js/chord_book.js"></script>
+
+</body>
+</html>
