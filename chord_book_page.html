@@ -1,0 +1,72 @@
+<html>
+<head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            background-image: url('./img/d.webp'); /* Replace with your image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        h1, p {
+            color: #f0f0f0; /* Light gray color for readability */
+            text-align: center;
+            font-family: Arial, sans-serif;
+            text-shadow: 1px 1px 2px #000; /* Add subtle shadow for better contrast */
+        }
+
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(2, 300px); /* Create two columns */
+            gap: 20px; /* Spacing between buttons */
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: block;
+            height: 50px;
+            background: linear-gradient(to bottom, #a000a0, #ff00ff);
+            border-radius: 25px;
+            text-align: center;
+            line-height: 50px;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            color: white;
+            text-shadow: 1px 1px 2px #000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-decoration: none; /* removes underline */
+        }
+
+        /* Media query for mobile devices */
+        @media (max-width: 600px) {
+            .button-container {
+                display: flex;
+                flex-direction: column; /* Stack buttons vertically */
+                align-items: center; /* Center buttons horizontally */
+                gap: 15px; /* Spacing between buttons */
+            }
+
+            .button {
+                width: 80%; /* Make button width responsive */
+                font-size: 18px; /* Adjust font size for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+
+    <div class="button-container">
+        <a href="chordbook.html" class="button">CHORD BOOK</a>
+    </div>
+
+</body>
+</html>
