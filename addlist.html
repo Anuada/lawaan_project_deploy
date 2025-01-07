@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selected Chords</title>
+    <link rel="stylesheet" href="./css/css_for_Chord_book.css">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: rgb(12, 1, 1);
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            width: 80%;
+            max-width: 500px;
+        }
+        .modal-content h2 {
+            margin-bottom: 10px;
+        }
+        .modal-content pre {
+            white-space: pre-wrap;
+            text-align: left;
+        }
+        .modal-content button {
+            margin-top: 15px;
+            padding: 5px 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .chord-list {
+            margin-bottom: 20px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination button {
+            padding: 5px 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .pagination button.disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Selected Chords</h1>
+
+        <!-- Search Box -->
+        <input type="text" id="searchBox" placeholder="Search chords..." oninput="filterChords()">
+        
+        <div id="selectedList" class="chord-list"></div>
+        <button onclick="goBack()">Go Back</button>
+        <button onclick="clearAll()">Clear All</button> <!-- Clear All Button -->
+
+        <!-- Pagination Controls -->
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- Modal for displaying lyrics -->
+    <div class="modal" id="lyricsModal">
+        <div class="modal-content">
+            <h2 id="modalTitle"></h2>
+            <pre id="modalLyrics"></pre>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const ITEMS_PER_PAGE = 5;
+        let currentPage = 1;
+        let filteredChords = [];
+        
+        // Function to render selected chords with pagination
+        function renderSelectedList() {
+            const selectedList = document.getElementById('selectedList');
+            const selectedChords = JSON.parse(localStorage.getItem('selectedChords')) || [];
+
+            if (selectedChords.length === 0) {
+                selectedList.innerHTML = '<p>No chords selected yet.</p>';
+                return;
+            }
+
+            filteredChords = selectedChords;
+            displayPage(currentPage);
+            renderPagination();
+        }
+
+        // Function to display the current page of chords
+        function displayPage(page) {
+            const startIndex = (page - 1) * ITEMS_PER_PAGE;
+            const endIndex = startIndex + ITEMS_PER_PAGE;
+            const chordsToDisplay = filteredChords.slice(startIndex, endIndex);
+
+            const selectedList = document.getElementById('selectedList');
+            selectedList.innerHTML = '';
+
+            chordsToDisplay.forEach((chord) => {
+                const chordDiv = document.createElement('div');
+                chordDiv.className = 'chord';
+                chordDiv.innerHTML = `
+                    <h3 onclick="showLyrics('${escapeString(chord.title)}', '${escapeString(chord.lyrics)}')">
+                        ${chord.title}
+                    </h3>
+                `;
+                selectedList.appendChild(chordDiv);
+            });
+        }
+
+        // Function to render pagination
+        function renderPagination() {
+            const pagination = document.getElementById('pagination');
+            const totalPages = Math.ceil(filteredChords.length / ITEMS_PER_PAGE);
+            pagination.innerHTML = '';
+
+            if (totalPages <= 1) return;
+
+            const prevButton = document.createElement('button');
+            prevButton.textContent = 'Previous';
+            prevButton.classList.toggle('disabled', currentPage === 1);
+            prevButton.onclick = () => changePage(currentPage - 1);
+            pagination.appendChild(prevButton);
+
+            const nextButton = document.createElement('button');
+            nextButton.textContent = 'Next';
+            nextButton.classList.toggle('disabled', currentPage === totalPages);
+            nextButton.onclick = () => changePage(currentPage + 1);
+            pagination.appendChild(nextButton);
+        }
+
+        // Function to change pages
+        function changePage(page) {
+            currentPage = page;
+            displayPage(currentPage);
+            renderPagination();
+        }
+
+        // Search chords based on user input
+        function filterChords() {
+            const searchQuery = document.getElementById('searchBox').value.toLowerCase();
+            const selectedChords = JSON.parse(localStorage.getItem('selectedChords')) || [];
+            
+            filteredChords = selectedChords.filter(chord => 
+                chord.title.toLowerCase().includes(searchQuery)
+            );
+
+            currentPage = 1; // Reset to the first page
+            displayPage(currentPage);
+            renderPagination();
+        }
+
+        // Escape special characters in strings
+        function escapeString(str) {
+            return str.replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, '\\n');
+        }
+
+        // Show modal with lyrics
+        function showLyrics(title, lyrics) {
+            const modal = document.getElementById('lyricsModal');
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalLyrics').textContent = lyrics.replace(/\\n/g, '\n');
+            modal.style.display = 'flex';
+        }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('lyricsModal');
+            modal.style.display = 'none';
+        }
+
+        // Function to go back to the main page
+        function goBack() {
+            window.location.href = 'chordbook.html'; // Replace 'index.html' with the actual main page filename
+        }
+
+        // Function to clear all selected chords
+        function clearAll() {
+            localStorage.removeItem('selectedChords'); // Remove selected chords from localStorage
+            renderSelectedList(); // Refresh the list on the page
+        }
+
+        // Render the selected chords on page load
+        renderSelectedList();
+    </script>
+</body>
+</html>

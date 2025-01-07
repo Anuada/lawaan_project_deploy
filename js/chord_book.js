@@ -43,13 +43,15 @@ function renderChords() {
             <h3>${chord.title}</h3>
             <button onclick="showLyrics('${escapeString(chord.title)}', '${escapeString(chord.lyrics)}')">View Lyrics</button>
             <button onclick="deleteChord(${start + index})">Delete</button>
-            <button onclick="editChord(${start + index})">Edit</button> <!-- Edit Button -->
+            <button onclick="editChord(${start + index})">Edit</button>
+            <button onclick="markChord(${start + index})">Add List</button> <!-- New Mark Button -->
         `;
         chordList.appendChild(chordDiv);
     });
 
     renderPagination(filteredChords.length);
 }
+
 
 function renderPagination(totalItems) {
     const pagination = document.getElementById('pagination');
@@ -140,3 +142,18 @@ function updateChord(index) {
 
 // Render chords on page load
 renderChords();
+
+function markChord(index) {
+    const chords = JSON.parse(localStorage.getItem('chords')) || [];
+    const selectedChords = JSON.parse(localStorage.getItem('selectedChords')) || [];
+    const chord = chords[index];
+
+    // Prevent duplicates
+    if (!selectedChords.some(selected => selected.title === chord.title && selected.lyrics === chord.lyrics)) {
+        selectedChords.push(chord);
+        localStorage.setItem('selectedChords', JSON.stringify(selectedChords));
+        alert(`${chord.title} has been added to the list.`);
+    } else {
+        alert(`${chord.title} is already in the list.`);
+    }
+}

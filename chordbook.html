@@ -5,10 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChordBook System</title>
     <link rel="stylesheet" href="./css/css_for_Chord_book.css">
+    <style>
+        /* Style for side navigation */
+        #sideNav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
 
+        #sideNav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        #sideNav a:hover {
+            color: #f1f1f1;
+        }
+
+        #sideNav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+    </style>
 </head>
 <body>
+    <!-- Side Navigation -->
+    <div id="sideNav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="addlist.html">Add List</a>
+        <a href="#">Songs</a>
+        <a href="#">Settings</a>
+    </div>
+
     <div class="container">
+        <!-- Button to open side nav -->
+        <button onclick="openNav()">&#9776; Open Side Nav</button>
+
         <h1>ChordBook System</h1>
         <input type="text" id="title" placeholder="Enter song title">
         <textarea id="lyrics" placeholder="Enter song lyrics"></textarea>
@@ -29,6 +75,16 @@
     </div>
 
     <script src="./js/chord_book.js"></script>
+    <script>
+        // Function to open side navigation
+        function openNav() {
+            document.getElementById("sideNav").style.width = "250px";
+        }
 
-</body>
+        // Function to close side navigation
+        function closeNav() {
+            document.getElementById("sideNav").style.width = "0";
+        }
+    </script>
+</body> 
 </html>
